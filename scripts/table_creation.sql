@@ -5,8 +5,8 @@ USE hackmit;
 -- drop table if exists users;
 create table users(
 	ID int not null auto_increment,
-    user_name varchar(256) unique,
-    user_password varchar(256),
+    username varchar(256) unique,
+    password varchar(256),
     email varchar(256) unique,
     primary key(ID)
 );
