@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Homepage</title>
+
+  <style>
+    .rooms {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .room {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+    <div class="rooms">
+        <h1>Rooms</h1>
+        <% rooms.forEach(room => { %>
+            <div class="room">
+                <p><%= room.roomName %></p>
+                <a href="/room/<%= room.roomID %>">Visit</a>
+            </div>
+        <% });%>
+    </div>
+
+</body>
+</html>

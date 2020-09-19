@@ -1,12 +1,6 @@
 db = require('../db').getDb()
 
 
-// ID int not null auto_increment,
-//     user_name varchar(256) unique,
-//     user_password varchar(256),
-//     email varchar(256) unique,
-//     primary key(ID)
-
 const getUserByEmail = (userEmail) => {
     const result = db.query(
         'SELECT * from users WHERE email = ?',
@@ -37,7 +31,7 @@ const createUser = (userName, userPassword, userEmail) => {
             'INSERT INTO users (username,password,email)  VALUES(?,?,?);',
             [userName, userPassword, userEmail],
         )
-        console.log('new user createeed:' + userName)
+        console.log('new user created:' + userName)
         return true
     }
     catch (e){
