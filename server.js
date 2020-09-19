@@ -28,6 +28,10 @@ app.get('/homepage', (req, res) => {
     res.render('homepage')
 })
 
+app.get('/room', (req, res) => {
+    res.render('room', {roomID : 5})
+})
+
 const userRouter = require('./routers/user_router')
 app.use('/user', userRouter)
 
