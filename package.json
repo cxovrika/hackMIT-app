@@ -1,0 +1,22 @@
+{
+  "name": "hackmit-app",
+  "version": "1.0.0",
+  "description": "Find buddies to study with",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cxovrika/hackMIT-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cxovrika/hackMIT-app/issues"
+  },
+  "homepage": "https://github.com/cxovrika/hackMIT-app#readme"
+}
