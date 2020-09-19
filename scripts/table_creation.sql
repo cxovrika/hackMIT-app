@@ -22,7 +22,6 @@ create table rooms(
 create table room_users(
 	userID int not null, 
     roomID int not null,
-    user_status bool,
     foreign key(userID) references users(ID),
     foreign key(roomID) references rooms(ID)
 );
