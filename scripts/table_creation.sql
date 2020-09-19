@@ -15,6 +15,7 @@ create table users(
 create table rooms(
 	ID int not null auto_increment,
     roomID varchar(256) unique not null,
+    roomName varchar(256) not null,
     roomCreatorID int,
     primary key(ID),
     foreign key(roomCreatorID) references users(ID)
@@ -22,13 +23,28 @@ create table rooms(
 
 -- drop table if exists room_users;
 create table room_users(
-	userID int not null, 
+	userID int not null,
     roomID int not null,
     foreign key(userID) references users(ID),
     foreign key(roomID) references rooms(ID)
 );
 
+
+insert into users value
+(null, "admin", "admin", "admin"),
+(null, "root", "root", "root"),
+(null, "a", "a", "a"),
+(null, "b", "b", "b");
+
+insert into rooms value
+(null, 0, 'admin room', 1),
+(null, 1, 'root room', 2),
+(null, 5, 'a room', 3);
+
  -- use hackmit;
 select * from users;
 select * from rooms;
 select * from room_users;
+
+-- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'
+-- flush privileges;
