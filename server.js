@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session') 
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
@@ -6,6 +7,25 @@ const io = require('socket.io')(server)
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+
+app.use(session({   
+    // It holds the secret key for session 
+    secret: 'SO_SECRET', 
+  
+    // Forces the session to be saved 
+    // back to the session store 
+    resave: true,
+  
+    // Forces a session that is "uninitialized" 
+    // to be saved to the store 
+    saveUninitialized: true
+})) 
+// Session can be accessed with:
+// req.session
+// req.session.name = 'blah'
+
+
+
 
 // Used to generate unique id for user, will be moved to server side, probably
 // app.get('/', (req, res) => {
