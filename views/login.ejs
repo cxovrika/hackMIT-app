@@ -6,11 +6,70 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Homepage</title>
 
+  <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+  body {
+  background: #222;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://unsplash.it/1200/800/?random');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-fill-mode: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  background: white;
+  padding: 20px 25px;
+  border: 5px solid #26a69a;
+  width: 550px;
+  height: auto;
+  box-sizing: border-box;
+  position: relative;
+}
+.col.s6 > .btn {
+   width: 100%;
+}
+
+radio:required {
+  border-color: red;
+}
+.container {
+  animation: showUp 0.5s cubic-bezier(0.18, 1.3, 1, 1) forwards;
+}
+
+@keyframes showUp {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transoform: scale(1);
+  }
+}
+.row {margin-bottom: 10px;}
+
+.ngl {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+}
+.invalid {
+
+}
+</style>
 </head>
 <body>
-  <h1>Login</h1>
+  <!-- <h1>Login</h1> -->
 
-  <form action="/user/login" method="post">
+  <!-- <form action="/user/login" method="post">
     <label for="username">username:</label><br>
     <input type="text" id="username" name="username"><br>
     <label for="password">password:</label><br>
@@ -19,8 +78,59 @@
   </form>
   <% if (locals.failed) { %>
     <p> Invalid username or password</p>
-  <% } %>
+  <% } %> -->
 
+  <div class="container">
+<div class="row">
+    <form class="col s12" action="/user/login" method="post" id="reg-form">
+      <div class="row">
+        <!-- <div class="input-field col s6">
+          <input type="text" id="username" name="username"><br>
+          <label for="username">username:</label><br>
+        </div>
+        <div class="input-field col s6">
+          <input type="password" id="password" name="password"><br><br>
+          <label for="password">password:</label><br>
+        </div> -->
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input type="text" id="username" name="username"><br>
+          <label for="username">
+            <span class="<% if(locals.failed) { %> red-text <%}%>t">
+              Username
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" name="password" class="validate" minlength="1" required>
+          <label for="password">
+            <span class="<% if(locals.failed) { %> red-text <%}%>t">
+              Password
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <button class="btn btn-large btn-register waves-effect waves-light" type="submit" name="action">
+              <% if(locals.failed) { %> Try Again <% }else{ %> Login <%}%>
+            <i class="material-icons right">done</i>
+          </button>
+          <!-- <% if (locals.failed) { %>
+    <div class="invalid">
+      <p> Invalid username or password</p>
+    </div>
+            red
+          <% } %> -->
+        </div>
+      </div>
+    </form>
+  </div>
+  <a href="/Homepage" title="Homepage" class="ngl btn-floating btn-large waves-effect waves-light red"><i class="material-icons">input</i></a>
+</div>
 
 
 </body>
