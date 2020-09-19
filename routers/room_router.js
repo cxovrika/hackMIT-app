@@ -1,6 +1,5 @@
 var express = require('express')
 var roomDao = require('../database/dao/room_dao')
-var roomdao = require('../database/dao/room_dao')
 var router = express.Router()
 
 router.get('/', (req, res) => {
@@ -25,13 +24,15 @@ router.post('/', (req, res) => {
     res.redirect('/homepage')
 })
 
-router.get('/room_configuration', (req, res) => {
-    console.log("POST request received on room_configuration, doing nothing for now")
-    var userName = req.body.username
-    var roomID = req.body.roomID
-    if(roomDao.verifyRoomCreator(userName, roomID))
+router.get('/room_configuration/:roomID', (req, res) => {
+    console.log("GET request received on room_configuration, doing nothing for now")
+    var user = req.session.user
+    var roomID = req.params.roomID
+    if (roomDao.verifyRoomCreator(user, roomID)) {
         res.render('room_configuration')
-    else res.render('homepage')
+    } else {
+        res.redirect('/homepage')
+    }
 })
 
 router.post('/room_configuration', (req, res) => {

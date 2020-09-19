@@ -41,8 +41,8 @@ router.post('/login', (req, res) => {
         })
         return
     }
-    
-    req.session.user = {username: realuser.username, email: realuser.email}
+
+    req.session.user = realuser
     res.redirect('/homepage')
 })
 
