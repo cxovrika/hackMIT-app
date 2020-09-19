@@ -33,19 +33,16 @@ router.post('/login', (req, res) => {
     console.log("POST request received on user, doing nothing for now")
     var user = req.body.username
     var password = req.body.password
-    realuser = userdao.getUser(user)
+    var realuser = userdao.getUser(user)
+
     if(realuser===null || realuser.password !== password){
-        //res.redirect('/user/login?failed=true')
         res.render('login', {
             failed: true
         })
         return
     }
-    console.log('printing realuser')
-    console.log(realuser)
-
-    req.session.user = {usenname: req.body.username, email:req.body.email}
-    console.log("logged in!")
+    
+    req.session.user = {username: realuser.username, email: realuser.email}
     res.redirect('/homepage')
 })
 
