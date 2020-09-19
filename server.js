@@ -40,6 +40,12 @@ app.get('/homepage', (req, res) => {
     res.render('homepage')
 })
 
+const userRouter = require('./routers/user_router')
+app.use('/user', userRouter)
+
+const roomRouter = require('./routers/room_router')
+app.use('/room', roomRouter)
+
 // io.on('connection', socket => {
 //   socket.on('join-room', (roomId, userId) => {
 //     socket.join(roomId)
