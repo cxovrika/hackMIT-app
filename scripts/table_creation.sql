@@ -15,7 +15,9 @@ create table users(
 create table rooms(
 	ID int not null auto_increment,
     roomID varchar(256) not null,
-    primary key(ID)
+    roomCreatorID int,
+    primary key(ID),
+    foreign key(roomCreatorID) references users(ID)
 );
 
 -- drop table if exists room_users;
