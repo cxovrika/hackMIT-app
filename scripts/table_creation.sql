@@ -5,16 +5,16 @@ USE hackmit;
 -- drop table if exists users;
 create table users(
 	ID int not null auto_increment,
-    user_name varchar(256),
+    user_name varchar(256) unique,
     user_password varchar(256),
-    email varchar(256),
+    email varchar(256) unique,
     primary key(ID)
 );
 
 -- drop table if exists rooms;
 create table rooms(
 	ID int not null auto_increment,
-    roomID varchar(256) not null,
+    roomID varchar(256) unique not null,
     roomCreatorID int,
     primary key(ID),
     foreign key(roomCreatorID) references users(ID)
