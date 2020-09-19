@@ -1,4 +1,5 @@
 db = require('../db').getDb()
+const { v4: uuidV4 } = require('uuid')
 const userDao = require('./user_dao')
 
 // Returns rooms where the given user is the creator
@@ -46,8 +47,24 @@ const getUserRooms = (username) => {
     }
 }
 
+const createNewRoom = (username, roomName) => {
+    try {
+        const user = userDao.getUser(username);
+        const roomId = uuidV4();
+        db.query(
+            'INSERT INTO rooms (roomID, roomName, roomCreatorID)  VALUES(?,?,?);',
+            [roomId, roomName, user.ID],
+        )
+        return true;
+    }
+    catch(e) {
+        console.log(`Failed to create a room from user ${username} with name ${roomName}`, e);
+        return false;
+    }
+}
 
 module.exports = {
     getUserOwnedRooms,
     getUserRooms,
+    createNewRoom,
 }
