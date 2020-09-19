@@ -28,18 +28,18 @@ app.get('/', (req, res) => {
     res.redirect('/homepage')
 })
 
-app.get('/homepage', (req, res) => {
-    res.render('homepage')
-})
-
 app.get('/room', (req, res) => {
     res.render('room', {roomID : 5})
 })
+
+const homepageRouter = require('./routers/homepage_router')
+app.use('/homepage', homepageRouter)
 
 const userRouter = require('./routers/user_router')
 app.use('/user', userRouter)
 
 const roomRouter = require('./routers/room_router')
 app.use('/room', roomRouter)
+
 
 server.listen(3000)
