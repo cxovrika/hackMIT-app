@@ -1,5 +1,8 @@
-var fs = require('fs');
+// Init DB before we start anything
+require('./database/db').initDb()
 
+
+var fs = require('fs');
 const express = require('express')
 const socketConfig = require('./socket/socket_config')
 debug = true
@@ -18,7 +21,7 @@ var session = require("express-session")({
 var bodyParser = require('body-parser');
 
 const app = express()
-const database = require('./database/db')
+
 var server
 if(debug) {
     server = http.Server(app)
@@ -30,7 +33,6 @@ if(debug) {
     server = https.createServer(credentials, app);
 }
 
-database.initDb()
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.json()); // support json encoded bodies
@@ -56,6 +58,9 @@ app.use('/user', userRouter)
 
 const roomRouter = require('./routers/room_router')
 app.use('/room', roomRouter)
+
+const findBuddyRouter = require('./routers/find_buddy_router')
+app.use('/find_buddy', findBuddyRouter)
 
 socketConfig.configureServerSocketIO(server, session);
 
