@@ -12,10 +12,15 @@ const findBuddy = () => {
     const findBuddyButton = document.getElementById('findBuddyButton');
     const stopSearchingButton = document.getElementById('stopSearchingButton');
 
+
+    elem = document.getElementById('groupSize');
+    const desiredBuddyCount = parseInt(elem.value);
+    console.log(desiredBuddyCount)
+
     spinner.classList.add('active');
     findBuddyButton.classList.add('disabled');
     stopSearchingButton.classList.remove('disabled');
-    socket.emit('find-buddy', interestList)
+    socket.emit('find-buddy', interestList, desiredBuddyCount);
 }
 
 const stopSearching = () => {
