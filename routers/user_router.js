@@ -25,12 +25,10 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/login', (req, res) => {
-    console.log("GET request received on user, doing nothing for now")
     res.render('login')
 })
 
 router.post('/login', (req, res) => {
-    console.log("POST request received on user, doing nothing for now")
     var user = req.body.username
     var password = req.body.password
     var realuser = userdao.getUser(user)
@@ -43,6 +41,12 @@ router.post('/login', (req, res) => {
     }
 
     req.session.user = realuser
+    res.redirect('/homepage')
+})
+
+
+router.get('/logout', (req, res) => {
+    res.session.user = undefined
     res.redirect('/homepage')
 })
 

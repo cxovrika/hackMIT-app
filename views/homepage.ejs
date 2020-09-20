@@ -5,14 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Homepage</title>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    body {
+      background: #222;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://unsplash.it/1200/800/?random');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      background-fill-mode: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 20px 25px;
+      border: 5px solid #26a69a;
+      width: 550px;
+      height: auto;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .col.s6 > .btn {
+      width: 100%;
+    }
+
+    radio:required {
+      border-color: red;
+    }
+    .container {
+      animation: showUp 0.5s cubic-bezier(0.18, 1.3, 1, 1) forwards;
+    }
+
+    @keyframes showUp {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transoform: scale(1);
+      }
+    }
+    .row {margin-bottom: 10px;}
+
+    .ngl {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+    }
+    h1{
+      margin: 0;
+    }
+
+  </style>
+
 </head>
 <body>
-  <h1>Study Buddies</h1>
-  <p>
-    Welcome,<br>
-    we are a revolutionary platform for bored students who need a small push from another person to start studying hard.
-  </p>
-  <a href="/user/login">login</a> <br/>
-  <a href="/user/register">register</a>
+<div class="container">
+
+  <div class="row">
+    <h1>Study Buddies</h1>
+    <p>
+      Welcome,<br>
+      we are a revolutionary platform for bored students who need a small push from another person to start studying hard.
+    </p>
+    <a class="waves-effect waves-light btn" href="/user/login">login</a>
+    <a class="waves-effect waves-light btn" href="/user/register">register</a>
+  </div>
+</div>
 </body>
 </html>
