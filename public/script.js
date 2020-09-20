@@ -29,6 +29,26 @@ myPeer.on('open', id => {
         myVideo.classList.add('myvid')
         addVideoStream(myVideo, stream)
 
+        console.log(stream)
+        window.triggerAudio = () => {
+            stream.getTracks()[0].enabled = !stream.getTracks()[0].enabled
+            if(stream.getTracks()[0].enabled)
+                document.getElementById("mute").children[0].innerText='mic_off'
+            else
+                document.getElementById("mute").children[0].innerText='mic'
+
+            // console.log(text)
+        }
+        window.triggerVideo = () => {
+            stream.getTracks()[1].enabled = !stream.getTracks()[1].enabled
+            // stream.getTracks()[0].enabled = !stream.getTracks()[1].enabled
+            if(stream.getTracks()[1].enabled)
+                document.getElementById("videostop").children[0].innerText='videocam_off'
+            else
+                document.getElementById("videostop").children[0].innerText='videocam'
+        }
+
+
         myPeer.on('call', call => {
             call.answer(stream)
             // console.log(call)
