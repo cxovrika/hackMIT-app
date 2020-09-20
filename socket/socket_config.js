@@ -53,6 +53,9 @@ const tryToFindMatches = () => {
             // Inform users to join a room
             for (let buddy in validBuddies) {
                 buddy = validBuddies[buddy];
+                if (seeker.user.ID != buddy.user.ID) {
+                    roomDao.addUserToRoom(roomID, buddy.user.username);
+                }
                 buddy.socket.emit('buddy-found', roomID);
                 delete buddySeekers[buddy.user.ID];
             }
