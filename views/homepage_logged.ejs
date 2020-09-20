@@ -6,6 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Homepage</title>
 
+  <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <style>
     .rooms {
         display: flex;
@@ -17,25 +24,112 @@
         flex-direction: row;
         align-items: center;
     }
+
+    h2 {
+        margin: 0;
+    }
+
+    body {
+      background: #222;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://unsplash.it/1200/800/?random');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      background-fill-mode: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .rooms {
+      background: white;
+      padding: 20px 25px;
+      border: 5px solid #26a69a;
+      width: 550px;
+      height: auto;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .collapsible-header {
+        background-color: #26a69a;
+    }
+
+    .collapsible-body {
+        background-color: #ff7961;
+    }
+
+    .header {
+        color: #f44336
+    }
+
   </style>
 </head>
 <body>
 
     <div class="rooms">
-        <h1>Rooms</h1>
-        <% rooms.forEach(room => { %>
-            <div class="room">
-                <p><%= room.roomName %></p>
-                <a href="/room/<%= room.roomID %>">Visit</a>
+
+
+      <!-- <ul class="collapsible popout">
+        <li>
+          <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+        </li>
+      </ul> -->
+        
+        <blockquote><h2 class="header flow-text">Rooms</h2></blockquote>
+        <br><br>
+        <ul class="collapsible popout">
+            <% rooms.forEach(room => { %>
+                <!-- <div class="room">
+                    <p><%= room.roomName %></p>
+                    <a href="/room/<%= room.roomID %>">Visit</a>
+                </div> -->
+                <li>
+                    <div class="white-text">
+                      <div class="collapsible-header"><i class="material-icons">
+                      whatshot</i><%= room.roomName %></div>
+                       </div>
+                        <div class="collapsible-body">
+                        <span><a href="/room/<%= room.roomID %>">Visit</a></span>
+                        </div>
+                </li>
+            <% });%>
+        </ul>
+    <div class="room">
+        <form action="/room" method="post">
+            <div class="input-field valign-wrapper">
+            <div class="input-field col s6">
+                <label for="lname">Room name:</label>
+                <input type="text" name="roomName">
             </div>
-        <% });%>
+            <!-- <input type="submit" value="Add new room"> -->
+            <!-- <div class="right-align"> -->
+              <button class="btn-floating btn-large waves-effect waves-light red" type="submit" value="Add new room" name="action"><i class="material-icons">add</i></button>
+            </div>
+            <!-- </div> -->
+        </form>
     </div>
-    <br><br>
-    <form action="/room" method="post">
-        <label for="lname">Room name:</label>
-        <input type="text" name="roomName">
-        <input type="submit" value="Add new room">
-    </form>
+    </div>
+    <!-- <br><br> -->
+    
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.collapsible');
+        var instances = M.Collapsible.init(elems);
+        });
+    </script>
+   
 
 </body>
 </html>

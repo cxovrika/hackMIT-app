@@ -20,7 +20,6 @@ socket.on('user-disconnected', userId => {
 })
 
 myPeer.on('open', id => {
-    document.getElementById('idddddd').innerHTML=id;
     console.log('peer id:' + id)
 
     navigator.mediaDevices.getUserMedia({
