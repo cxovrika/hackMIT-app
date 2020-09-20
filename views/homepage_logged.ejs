@@ -68,6 +68,10 @@
         margin-right: 95px;
     }
 
+    .colll {
+        background-color: #ff7961;
+    }
+
 
 
   </style>
@@ -80,17 +84,32 @@
         <br><br>
         <ul class="collapsible popout">
             <% rooms.forEach(room => { %>
-                <!-- <div class="room">
-                    <p><%= room.roomName %></p>
-                    <a href="/room/<%= room.roomID %>">Visit</a>
-                </div> -->
                 <li>
                     <div class="white-text">
                       <div class="collapsible-header"><i class="material-icons">
                       whatshot</i><%= room.roomName %></div>
                        </div>
                         <div class="collapsible-body">
-                        <span><a href="/room/<%= room.roomID %>">Visit</a></span>
+                            <div class="colll">
+                            <ul class="collection with-header" style="background-color: #ff7961;">
+                                <li class="collection-header"><h6> Users in this room:</h6></li>
+                                <li class="collection-item">
+                                    user #N
+                                </li>
+                                <li class="collection-item">
+                                    user #N
+                                </li>
+                                <li class="collection-item">
+                                    user #N
+                                </li>
+                            </ul>
+                        </div>
+                        <span>
+                            <!-- <a href="/room/<%= room.roomID %>">Visit</a> -->
+                            <button class="btn tooltipped waves-effect waves-light pull-right" data-position="bottom" data-tooltip="Visit the room" type="button" value="match" onclick="location.href='/room/<%= room.roomID %>'">
+                               Visit
+                            </button>
+                        </span>
                         </div>
                 </li>
             <% });%>
