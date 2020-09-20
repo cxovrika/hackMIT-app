@@ -1,7 +1,10 @@
+// Init DB before we start anything
+require('./database/db').initDb()
+
+
 var fs = require('fs');
-
 const express = require('express')
-
+const socketConfig = require('./socket/socket_config')
 debug = true
 
 var http, https
@@ -15,11 +18,10 @@ var session = require("express-session")({
     resave: true,
     saveUninitialized: true
 });
-var sharedsession = require("express-socket.io-session");
 var bodyParser = require('body-parser');
 
 const app = express()
-const database = require('./database/db')
+
 var server
 if(debug) {
     server = http.Server(app)
@@ -30,9 +32,7 @@ if(debug) {
 
     server = https.createServer(credentials, app);
 }
-const io = require('socket.io')(server)
 
-database.initDb()
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.json()); // support json encoded bodies
@@ -59,26 +59,10 @@ app.use('/user', userRouter)
 const roomRouter = require('./routers/room_router')
 app.use('/room', roomRouter)
 
-io.use(sharedsession(session, {
-    autoSave:true
-}));
+const findBuddyRouter = require('./routers/find_buddy_router')
+app.use('/find_buddy', findBuddyRouter)
 
-io.on('connection', socket => {
-    if(socket.handshake.session.user === undefined){
-        console.log(socket)
-        return
-    }
-    socket.on('join-room', (roomId, userId) => {
-        console.log(socket.handshake.session)
-        console.log(userId + " joined " + roomId)
-        socket.join(roomId)
-        socket.to(roomId).broadcast.emit('user-connected', userId)
-
-        socket.on('disconnect', () => {
-            socket.to(roomId).broadcast.emit('user-disconnected', userId)
-        })
-    })
-})
+socketConfig.configureServerSocketIO(server, session);
 
 
 if(debug)

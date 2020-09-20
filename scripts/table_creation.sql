@@ -29,6 +29,12 @@ create table room_users(
     foreign key(roomID) references rooms(ID)
 );
 
+create table categories(
+	ID int not null auto_increment,
+    name varchar(256) unique not null,
+    primary key(ID)
+);
+
 
 insert into users value
 (null, "admin", "admin", "admin"),
@@ -41,10 +47,16 @@ insert into rooms value
 (null, 1, 'root room', 2),
 (null, 5, 'a room', 3);
 
+insert into categories value
+(null, 'Computer Science'),
+(null, 'Mathematics'),
+(null, 'Physics');
+
  -- use hackmit;
 select * from users;
 select * from rooms;
 select * from room_users;
+select * from categories;
 
 -- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'
 -- flush privileges;

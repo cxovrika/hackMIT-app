@@ -83,10 +83,10 @@ const createNewRoom = (username, roomName) => {
             'INSERT INTO rooms (roomID, roomName, roomCreatorID)  VALUES(?,?,?);',
             [roomId, roomName, user.ID],
         )
-        return true;
+        return roomId;
     } catch (e) {
         console.log(`Failed to create a room from user ${username} with name ${roomName}`, e);
-        return false;
+        return null;
     }
 }
 
@@ -189,5 +189,6 @@ module.exports = {
     getUsersFromRoom,
     addUserToRoom,
     removeUserFromRoom,
-    changeRoomName
+    changeRoomName,
+    getRoomByRoomID
 }
