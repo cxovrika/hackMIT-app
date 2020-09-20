@@ -125,6 +125,7 @@ const addUserToRoom = (roomRoomID, userName) => {
     if(userName === '') return false
     try {
         user = userDao.getUser(userName)
+        if(verifyRoomCreator(user, roomRoomID)) return false
         userID = user.ID
         if (verifyUserInRoom(roomRoomID, userID)) return false
         room = getRoomByRoomID(roomRoomID)
