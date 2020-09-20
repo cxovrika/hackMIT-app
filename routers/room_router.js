@@ -41,4 +41,11 @@ router.post('/room_configuration', (req, res) => {
     res.render('room_configuration')
 })
 
+router.get('/:roomID', (req, res) => {
+    console.log(req.params.roomID)
+    room = req.params.roomID
+    res.render('room', {roomID: room})
+})
+
+
 module.exports = router

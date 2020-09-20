@@ -25,7 +25,10 @@
     "ejs": "^3.1.3",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "express-socket.io-session": "^1.3.5",
+    "jade": "^1.11.0",
     "nodemon": "^2.0.4",
+    "peer": "^0.5.3",
     "socket.io": "^2.3.0",
     "sync-mysql": "^3.0.1",
     "uuid": "^8.3.0"

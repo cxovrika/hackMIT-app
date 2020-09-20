@@ -1,28 +1,37 @@
+var fs = require('fs');
+
 const express = require('express')
-const session = require('express-session')
+
+var https = require('https')
+
+
+var session = require("express-session")({
+    secret: "SO_SECRET",
+    resave: true,
+    saveUninitialized: true
+});
+var sharedsession = require("express-socket.io-session");
 var bodyParser = require('body-parser');
+
 const app = express()
-const server = require('http').Server(app)
 const database = require('./database/db')
+
+var privateKey  = fs.readFileSync('../privkey.pem', 'utf8');
+var certificate = fs.readFileSync('../fullchain.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
+var httpsServer = https.createServer(credentials, app);
+const io = require('socket.io')(httpsServer)
+
 database.initDb()
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(express.static('public'))
 
 
-app.use(session({   
-    // It holds the secret key for session 
-    secret: 'SO_SECRET', 
-  
-    // Forces the session to be saved 
-    // back to the session store 
-    resave: true,
-  
-    // Forces a session that is "uninitialized" 
-    // to be saved to the store 
-    saveUninitialized: true
-}))
+app.use(session)
 
 app.get('/', (req, res) => {
     res.redirect('/homepage')
@@ -41,5 +50,22 @@ app.use('/user', userRouter)
 const roomRouter = require('./routers/room_router')
 app.use('/room', roomRouter)
 
+io.use(sharedsession(session, {
+    autoSave:true
+}));
 
-server.listen(3000)
+io.on('connection', socket => {
+    socket.on('join-room', (roomId, userId) => {
+        console.log(socket.handshake.session)
+        console.log(userId + " joined " + roomId)
+        socket.join(roomId)
+        socket.to(roomId).broadcast.emit('user-connected', userId)
+
+        socket.on('disconnect', () => {
+            socket.to(roomId).broadcast.emit('user-disconnected', userId)
+        })
+    })
+})
+
+
+httpsServer.listen(443);
