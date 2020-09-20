@@ -29,16 +29,25 @@ router.get('/room_configuration/:roomID', (req, res) => {
     var user = req.session.user
     var roomID = req.params.roomID
     if (roomDao.verifyRoomCreator(user, roomID)) {
-        res.render('room_configuration')
+        roomUsers = roomDao.getUsersFromRoom(roomID)
+        res.render('room_configuration', {roomID: roomID, roomUsers : roomUsers})
     } else {
         res.redirect('/homepage')
     }
 })
 
-router.post('/room_configuration', (req, res) => {
+router.post('/room_configuration/:roomID', (req, res) => {
     console.log("POST request received on room_configuration, doing nothing for now")
-
-    res.render('room_configuration')
+    console.log(req.body)
+    var roomName = req.body.roomName
+    var addUser = req.body.addUser
+    var removeUser = req.body.removeUser
+    var roomID = req.params.roomID
+    console.log(roomName, addUser, removeUser)
+    roomDao.changeRoomName(roomID, roomName)
+    roomDao.addUserToRoom(roomID, addUser)
+    roomDao.removeUserFromRoom(roomID, removeUser)
+    res.redirect('/room/room_configuration/' + roomID) // eqneba isev get itadn oyolebuli?
 })
 
 module.exports = router

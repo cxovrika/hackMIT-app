@@ -41,10 +41,24 @@ const createUser = (userName, userPassword, userEmail) => {
     }
 }
 
+const getUserByID = (userID) => {
+    try{
+        const users = db.query(
+            "select * from users as u where u.ID = ?", [userID]
+        )
+        if(users.length === 0) return null
+        return users[0]
+    }
+    catch(e) {
+        console.log(`Unexpected error when searching for users by ID: ${userID}`, e);
+        return null
+    }
+}
 
 
 module.exports = {
     getUserByEmail,
     createUser,
-    getUser
+    getUser,
+    getUserByID
 };
