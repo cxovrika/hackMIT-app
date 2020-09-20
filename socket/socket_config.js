@@ -11,12 +11,10 @@ const tryToFindMatches = () => {
         console.log("user", i);
         const seeker = seekers[i][1];
         const interests = seeker.interests;
-
-
         const desiredBuddyCount = seeker.buddyCount;
-        const validBuddies = [];
-
+        
         for (let intidx = 0; intidx < interests.length; intidx++) {
+            const validBuddies = [];
             const interest = interests[intidx];
             console.log("chekcing interest", interest)
 
@@ -26,9 +24,7 @@ const tryToFindMatches = () => {
                 const otherDesiredBuddyCount = otherSeeker.buddyCount;
                 
                 console.log("checking", interest, "in", otherInterests)
-                if (!(otherInterests.includes
-                    
-                    (interest))) continue;
+                if (!(otherInterests.includes(interest))) continue;
                 console.log("good 1", desiredBuddyCount, otherDesiredBuddyCount)
                 if (desiredBuddyCount !== otherDesiredBuddyCount) continue;
                 console.log("good 2")
@@ -37,7 +33,7 @@ const tryToFindMatches = () => {
             }
             
             console.log("Totally", validBuddies.length, desiredBuddyCount - 1)
-            if (validBuddies.length < desiredBuddyCount - 1) continue;
+            if (validBuddies.length !== desiredBuddyCount - 1) continue;
 
 
             validBuddies.push(seeker);
@@ -63,21 +59,6 @@ const tryToFindMatches = () => {
             return;
         }
     }
-    
-
-
-    // for (const otherSeekerId in buddySeekers) {
-    //     if (newSeekerId == otherSeekerId) continue; // use double equals as id is converted to string for keys
-
-    //     const interestsA = buddySeekers[otherSeekerId].interests;
-    //     const interestsB = buddySeekers[newSeekerId].interests;
-    //     const commonInterests = interestsA.filter(x => interestsB.includes(x));
-
-    //     if (commonInterests.length == 0) continue;
-    //     return otherSeekerId;
-    // }
-
-    // return null;
 }
 
 const configureServerSocketIO = (server, session) => {
@@ -111,34 +92,15 @@ const configureServerSocketIO = (server, session) => {
 
             console.log("Received user with buddyCount", buddyCount);
 
-            // console.log("Started search, ", user)
-            // console.log("cur seekers, ", buddySeekers)
-
-            // const buddyId = tryToFindBuddies(user.ID)
-            // if (buddyId === null) return;
-
-            // const buddy = buddySeekers[buddyId].user
-            // const userSocket = buddySeekers[user.ID].socket
-            // const buddySocket = buddySeekers[buddyId].socket
-
-            // const roomName = `Study room for ${user.username} and ${buddy.username}`;
-            // const roomID = roomDao.createNewRoom(user.username, roomName);
-            // if (roomID === null) return; // Something went wrong
-            
-            // // Inform users to join a room
-            // userSocket.emit('buddy-found', roomID);
-            // buddySocket.emit('buddy-found', roomID);
-
-            
-            // delete buddySeekers[user.ID];
-            // delete buddySeekers[buddy.ID];
+            socket.on('disconnect', () => {
+                delete buddySeekers[user.ID];
+            })
         })
 
         socket.on('stop-searching', () => {
             delete buddySeekers[user.ID];
             // console.log("Stopped search, ", user)
             // console.log("cur seekers, ", buddySeekers)
-
         })
     })
 
