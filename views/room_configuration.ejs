@@ -5,34 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Room Configurations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
-<h1>Room Configurations</h1>
-<form action="/room/room_configuration/<%=roomID%>" method="post">
-    <label for="roomNameLabel">Room Name:</label><br>
-    <!--   <div class="roomNameField"> -->
-    <input type="text" id="roomName" name = "roomName">
-    <button type="updateRoomButton">Update Room Name</button><br> <br>
-    <label for="addUserLabel">Add User:</label><br>
-    <input type="text" id="addUser" name="addUser">
-    <button type="addUserButton">Add User</button> <br> <br>
-    <label for="removeUserLabel">Remove User:</label><br>
-    <input type="text" id="removeUser" name="removeUser">
-    <button type="removeUserButton">Remove User</button>
-    <!--  <input type="text" id="roomName" name="roomName"> <br> -->
-</form>
+
+<div class="container">
+<h1>Room "<%=roomName%>" Configuration</h1>
+
+<div class="card-panel grey lighten-5 z-depth-1">
+    <form action="/room/room_configuration/changeName/<%=roomID%>" method="post">
+        <div class="input-field valign-wrapper">
+            <label for="addUserLabel">Room Name:</label><br>
+            <br>
+            <input type="text" id="roomName" name = "roomName">
+            <div class="card-action">
+                <button class="col s1 right-align waves-effect waves-light btn" type="submit">
+                    Update Name
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="card-panel grey lighten-5 z-depth-1">
+    <form action="/room/room_configuration/addUser/<%=roomID%>" method="post">
+        <div class="input-field valign-wrapper">
+            <label for="addUserLabel">Add User:</label><br>
+            <br>
+            <input type="text" id="addUser" name="addUser">
+            <div class="card-action">
+                <button class="col s1 right-align waves-effect waves-light btn" type="submit">
+                    Add
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 <h2>Current Users Are:</h2>
-<div class="users">
+<div class="users row">
     <% roomUsers.forEach(user => { %>
-        <div class="user">
-            <%= user.username %>
+        <div class="card-panel grey lighten-5 z-depth-1">
+
+            <form action="/room/room_configuration/removeUser/<%=roomID%>" method="post">
+                <div class="valign-wrapper">
+                    <h5 class="col left-align"><%= user.username %></h5>
+                    <input type="hidden" value="<%=user.username%>" name="removeUser">
+                    <button class="col s1 right-align waves-effect waves-light btn" type="submit">
+                        Remove
+                    </button>
+                </div>
+            </form>
+
         </div>
     <% }) %>
 </div>
-
-<h1>some default setting forms</h1>
-shevtanxmdet mere chemo dzmebo
+</div>
 </body>
 </html>
