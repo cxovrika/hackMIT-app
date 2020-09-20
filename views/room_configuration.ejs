@@ -8,12 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style type="text/css">
+        body {
+          background: #222;
+          background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://unsplash.it/1200/800/?random');
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center center;
+          background-fill-mode: rgba(0,0,0,0.5);
+          display: flex;
+          /*justify-content: center;
+          align-items: center;
+          height: 100vh;*/
+        }
+
+        .bat {
+            width: 100%;
+        }
+
+    </style>
+
 </head>
 
 <body>
 
 <div class="container">
-<h1>Room "<%=roomName%>" Configuration</h1>
+<h1 class="white-text">Room "<%=roomName%>" Configuration</h1>
 
 <div class="card-panel grey lighten-5 z-depth-1">
     <form action="/room/room_configuration/changeName/<%=roomID%>" method="post">
@@ -46,7 +67,7 @@
 </div>
 
 
-<h2>Current Users Are:</h2>
+<h2 class="white-text">Current Users Are:</h2>
 <div class="users row">
     <% roomUsers.forEach(user => { %>
         <div class="card-panel grey lighten-5 z-depth-1">
@@ -55,7 +76,7 @@
                 <div class="valign-wrapper">
                     <h5 class="col left-align"><%= user.username %></h5>
                     <input type="hidden" value="<%=user.username%>" name="removeUser">
-                    <button class="col s1 right-align waves-effect waves-light btn" type="submit">
+                    <button class="bat col s1 right-align waves-effect waves-light btn" type="submit">
                         Remove
                     </button>
                 </div>
