@@ -61,30 +61,20 @@
     }
 
     .header {
-        color: #f44336
+        color: #f44336;
     }
+
+    .form-class {
+        margin-right: 95px;
+    }
+
+
 
   </style>
 </head>
 <body>
 
     <div class="rooms">
-
-
-      <!-- <ul class="collapsible popout">
-        <li>
-          <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-        <li>
-          <div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-        <li>
-          <div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-          <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-        </li>
-      </ul> -->
         
         <blockquote><h2 class="header flow-text">Rooms</h2></blockquote>
         <br><br>
@@ -106,20 +96,30 @@
             <% });%>
         </ul>
     <div class="room">
+        <div class="form-class">
         <form action="/room" method="post">
             <div class="input-field valign-wrapper">
             <div class="input-field col s6">
                 <label for="lname">Room name:</label>
                 <input type="text" name="roomName">
-            </div>
+            </div class="floating-class">
             <!-- <input type="submit" value="Add new room"> -->
             <!-- <div class="right-align"> -->
               <button class="btn-floating btn-large waves-effect waves-light red" type="submit" value="Add new room" name="action"><i class="material-icons">add</i></button>
             </div>
             <!-- </div> -->
         </form>
+        </div>
+         <div class="match-class">
+            <!-- <a class="btn tooltipped" data-position="bottom" data-tooltip="I am a tooltip">Hover me! -->
+                <button class="btn tooltipped waves-effect waves-light btn-large pull-right" data-position="bottom" data-tooltip="Take a risk! Match with individuals, who are studying the same subject" type="button" value="match" onclick="location.href='/find_buddy'">
+                    Match!
+                </button>
+            <!-- </a> -->
+        </div>
     </div>
     </div>
+
     <!-- <br><br> -->
     
 
@@ -129,6 +129,13 @@
         var instances = M.Collapsible.init(elems);
         });
     </script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.tooltipped');
+        var instances = M.Tooltip.init(elems);
+  });
+    </script>>
    
 
 </body>
