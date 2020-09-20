@@ -28,7 +28,7 @@
       background: white;
       padding: 20px 25px;
       border: 5px solid #26a69a;
-      width: 550px;
+      width: 750px;
       height: auto;
       box-sizing: border-box;
       position: relative;
@@ -59,13 +59,15 @@
       top: -20px;
       right: -20px;
     }
-    h1{
+    h1 {
       margin: 0;
     }
 
     .bottomStuff {
         display: flex;
         flex-direction: row;
+        /* justify-content: center; */
+        align-items: center;
     }
 
   </style>
@@ -91,6 +93,8 @@
                     }
                 }
             );
+
+           
         });
     </script>
 
@@ -102,9 +106,23 @@
             <div id="categories" class="chips chips-autocomplete"></div>
             
             <div class="bottomStuff">
+
+                <div class="row" style="margin: 0 20px 0 0;">
+                    <form style="padding: 0;" class="col s12">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input id="groupSize" min="2" max="5" type="number" value="2" class="validate">
+                          <label for="email">Group size</label>
+                          <span class="helper-text" data-error="wrong" data-success="right">From 2 to 5 inclusively</span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
                 <a style="margin: 0;" onclick="findBuddy()" id="findBuddyButton" class="btn">Find Buddy</a>
                 <a style="margin: 0 20px 0 20px;"onclick="stopSearching()" id="stopSearchingButton" class="btn disabled">Stop Searching</a>
-            
+                
+
                 <div id="spinner" class="preloader-wrapper small">
                 <div class="spinner-layer spinner-green-only">
                     <div class="circle-clipper left">
