@@ -42,6 +42,20 @@
             height: 50%;
         }
 
+        video:first-child:nth-last-child(5),
+        video:first-child:nth-last-child(5) ~ video {
+            width: 33.33333%;
+            height: 50%;
+        }
+        video:first-child:nth-last-child(6),
+        video:first-child:nth-last-child(6) ~ video {
+            width: 33.33333%;
+            height: 50%;
+        }
+
+
+
+
         .container{
             min-width: 100%;
             min-height: 100%;
@@ -68,6 +82,25 @@
             -moz-transform:rotateY(180deg); /* Firefox */
         }
 
+        .butttons{
+            position: absolute;
+
+            bottom: 0;
+            left: 47%;
+
+            z-index: 10;
+        }
+
+        #mute {
+
+        }
+        #videostop {
+            /*position: absolute;*/
+            /*bottom: 0;*/
+            /*left: 100px;*/
+            /*z-index: 10;*/
+        }
+
     </style>
 </head>
 <body>
@@ -76,7 +109,10 @@
     <div id="videos-container"></div>
 </div>
 
-<a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+<div class="butttons">
+    <a id="mute" class="btn-floating btn-large waves-effect waves-light red" onclick="window.triggerAudio()"><i class="material-icons">mic_off</i></a>
+    <a id="videostop" class="btn-floating btn-large waves-effect waves-light red"onclick="window.triggerVideo()"><i class="material-icons">videocam_off</i></a>
+</div>
 
 <script>
     ROOM_ID = "<%= roomID %>"
