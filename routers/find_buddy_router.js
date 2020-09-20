@@ -1,4 +1,5 @@
 var express = require('express')
+var categoryDao = require('../database/dao/category_dao')
 var router = express.Router()
 
 router.get('/', (req, res) => {
@@ -6,7 +7,8 @@ router.get('/', (req, res) => {
         return res.render('homepage')
     }
 
-    res.render('find_buddy', {})
+    const categories = categoryDao.getAllCategories()
+    res.render('find_buddy', {categories: categories})
 })
 
 module.exports = router

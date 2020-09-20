@@ -7,6 +7,9 @@
   <title>Homepage</title>
 </head>
 <body>
+    <script defer>
+        const categories = JSON.parse(`<%-JSON.stringify(categories)%>`);
+    </script>
     <h1>Find Study Buddies</h1>
 
     <button onclick="findBuddy()">Find Buddy</button>
