@@ -46,7 +46,7 @@ router.post('/login', (req, res) => {
 
 
 router.get('/logout', (req, res) => {
-    res.session.user = undefined
+    req.session.user = undefined
     res.redirect('/homepage')
 })
 
