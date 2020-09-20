@@ -6,12 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Room Configurations</title>
 </head>
+
 <body>
 <h1>Room Configurations</h1>
-<form action="/room/room_configurations" method="post">
-    <label for="roomName">Room Name:</label><br>
-    <input type="text" id="roomName" name="roomName"> <br>
+<form action="/room/room_configuration/<%=roomID%>" method="post">
+    <label for="roomNameLabel">Room Name:</label><br>
+    <!--   <div class="roomNameField"> -->
+    <input type="text" id="roomName" name = "roomName">
+    <button type="updateRoomButton">Update Room Name</button><br> <br>
+    <label for="addUserLabel">Add User:</label><br>
+    <input type="text" id="addUser" name="addUser">
+    <button type="addUserButton">Add User</button> <br> <br>
+    <label for="removeUserLabel">Remove User:</label><br>
+    <input type="text" id="removeUser" name="removeUser">
+    <button type="removeUserButton">Remove User</button>
+    <!--  <input type="text" id="roomName" name="roomName"> <br> -->
 </form>
+
+<h2>Current Users Are:</h2>
+<div class="users">
+    <% roomUsers.forEach(user => { %>
+        <div class="user">
+            <%= user.username %>
+        </div>
+    <% }) %>
+</div>
+
 <h1>some default setting forms</h1>
 shevtanxmdet mere chemo dzmebo
 </body>

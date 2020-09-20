@@ -1,5 +1,5 @@
 db = require('../db').getDb()
-const { v4: uuidV4 } = require('uuid')
+const {v4: uuidV4} = require('uuid')
 const userDao = require('./user_dao')
 
 // Returns rooms where the given user is the creator
@@ -15,8 +15,7 @@ const getUserOwnedRooms = (username) => {
             [user.ID],
         );
         return rooms;
-    }
-    catch (e) {
+    } catch (e) {
         console.log(`Failed to load owned rooms for user ${username}`, e);
         return [];
     }
@@ -40,15 +39,14 @@ const getUserRooms = (username) => {
         return userOwnedRooms.concat(
             otherRooms.filter(r => !(r.ID in ownedRoomIds))
         );
-    }
-    catch (e) {
+    } catch (e) {
         console.log(`Failed to load rooms for user ${username}`, e);
         return [];
     }
 }
 
 const verifyRoomCreator = (user, roomID) => {
-    try{
+    try {
         // checks if room and user are mapped
         const userID = user.ID
         // checks if user is creator of room
@@ -57,21 +55,21 @@ const verifyRoomCreator = (user, roomID) => {
 
         const roomCreatorID = room.roomCreatorID
 
-        if(userID !== roomCreatorID) return false
+        if (userID !== roomCreatorID) return false
         return true
-    }catch(e){
+    } catch (e) {
         console.log("Unexpected error when verifying user " + user.username + " to room with ID " + roomID, e)
         return false
     }
 }
 
 const getRoomByRoomID = (roomID) => {
-    try{
+    try {
         const resultRoom = db.query(
             "select * from rooms as r where r.roomID = ?", [roomID]
         )
         return resultRoom[0]
-    }catch (e) {
+    } catch (e) {
         console.log("Unexpected error when verifying roomID " + roomID, e)
         return null
     }
@@ -86,17 +84,110 @@ const createNewRoom = (username, roomName) => {
             [roomId, roomName, user.ID],
         )
         return true;
-    }
-    catch(e) {
+    } catch (e) {
         console.log(`Failed to create a room from user ${username} with name ${roomName}`, e);
         return false;
     }
 }
 
 
+const getUsersFromRoom = (roomRoomID) => {
+    try {
+        room = getRoomByRoomID(roomRoomID)
+        roomID = room.ID
+        const results = db.query(
+            "select ru.userID from room_users as ru where ru.roomID = ?", [roomID]
+        )
+
+        users = []
+        results.forEach(result => {
+            users.push(userDao.getUserByID(result.userID))
+        })
+        return users
+    } catch (e) {
+        console.log(`Unexpected error when searching for users by roomID: ${roomID}`, e);
+        return null
+    }
+}
+
+const verifyUserInRoom = (roomRoomID, userID) => {
+    try{
+        users = getUsersFromRoom(roomRoomID)
+        return users.some( element => element.ID === userID)
+    }
+    catch (e) {
+        console.log(`VerifyUserInRoom error when searching for users by roomID: ${userID} ${roomID}`, e);
+        return false
+    }
+}
+
+const addUserToRoom = (roomRoomID, userName) => {
+    if(userName === '') return false
+    try {
+        user = userDao.getUser(userName)
+        userID = user.ID
+        if (verifyUserInRoom(roomRoomID, userID)) return false
+        room = getRoomByRoomID(roomRoomID)
+        roomID = room.ID
+        const result = db.query(
+            "insert into room_users (userID, roomID) values(?, ?);",
+            [userID, roomID]
+        )
+        console.log('new user' + userID + ' added to room ' + roomRoomID)
+        return true
+    } catch (e) {
+        console.log(`Failed to add user: ${user} to room: ${roomRoomID}`, e);
+        return false
+    }
+
+}
+
+const removeUserFromRoom = (roomRoomID, userName) => {
+    if(userName === '') return false
+    try {
+        user = userDao.getUser(userName)
+        userID = user.ID
+        if (!verifyUserInRoom(roomRoomID, userID)) return false
+        room = getRoomByRoomID(roomRoomID)
+        roomID = room.ID
+        const result = db.query(
+            "delete from room_users as ru where ru.userID = ?",
+            [userID]
+        )
+        console.log('user' + userID + ' removed from room ' + roomRoomID)
+        return true
+    } catch (e) {
+        console.log(`Failed to remove user: ${user} to room: ${roomRoomID}`, e);
+        return false
+    }
+}
+
+const changeRoomName = (roomRoomID, roomName) =>{
+    if(roomName === '') return false
+    try{
+        room = getRoomByRoomID(roomRoomID)
+        roomID = room.ID
+        const result = db.query(
+            "update rooms set roomName = ? where ID = ?",
+            [roomName, roomID]
+        )
+        console.log("Updated room " + roomRoomID + " name to " + roomName)
+        if(result.chagedRows > 1) return false
+        return true
+    }
+    catch (e) {
+        console.log(`Failed to change room name user: ${roomRoomID} to name: ${roomName}`, e);
+        return false
+    }
+}
+
 module.exports = {
     getUserOwnedRooms,
     getUserRooms,
     createNewRoom,
-    verifyRoomCreator
+    verifyRoomCreator,
+    getUsersFromRoom,
+    addUserToRoom,
+    removeUserFromRoom,
+    changeRoomName
 }
