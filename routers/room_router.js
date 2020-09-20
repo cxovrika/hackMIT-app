@@ -38,12 +38,10 @@ router.get('/room_configuration/:roomID', (req, res) => {
 
 router.post('/room_configuration/:roomID', (req, res) => {
     console.log("POST request received on room_configuration, doing nothing for now")
-    console.log(req.body)
     var roomName = req.body.roomName
     var addUser = req.body.addUser
     var removeUser = req.body.removeUser
     var roomID = req.params.roomID
-    console.log(roomName, addUser, removeUser)
     roomDao.changeRoomName(roomID, roomName)
     roomDao.addUserToRoom(roomID, addUser)
     roomDao.removeUserFromRoom(roomID, removeUser)
