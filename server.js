@@ -2,8 +2,13 @@ var fs = require('fs');
 
 const express = require('express')
 
-var https = require('https')
+debug = true
 
+var http, https
+if(debug)
+    http = require('http')
+else
+    https = require('https')
 
 var session = require("express-session")({
     secret: "SO_SECRET",
@@ -15,13 +20,17 @@ var bodyParser = require('body-parser');
 
 const app = express()
 const database = require('./database/db')
+var server
+if(debug) {
+    server = http.Server(app)
+} else {
+    var privateKey  = fs.readFileSync('../privkey.pem', 'utf8');
+    var certificate = fs.readFileSync('../fullchain.pem', 'utf8');
+    var credentials = {key: privateKey, cert: certificate};
 
-var privateKey  = fs.readFileSync('../privkey.pem', 'utf8');
-var certificate = fs.readFileSync('../fullchain.pem', 'utf8');
-var credentials = {key: privateKey, cert: certificate};
-
-var httpsServer = https.createServer(credentials, app);
-const io = require('socket.io')(httpsServer)
+    server = https.createServer(credentials, app);
+}
+const io = require('socket.io')(server)
 
 database.initDb()
 
@@ -55,6 +64,10 @@ io.use(sharedsession(session, {
 }));
 
 io.on('connection', socket => {
+    if(socket.handshake.session.user === undefined){
+        console.log(socket)
+        return
+    }
     socket.on('join-room', (roomId, userId) => {
         console.log(socket.handshake.session)
         console.log(userId + " joined " + roomId)
@@ -68,4 +81,7 @@ io.on('connection', socket => {
 })
 
 
-httpsServer.listen(443);
+if(debug)
+    server.listen(80);
+else
+    server.listen(443);
